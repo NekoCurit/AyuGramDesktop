@@ -10,12 +10,11 @@ jobs:
     - run: |
           sudo apt update
           sudo apt install -y python3-poetry
-          
+    - run: |
           git clone --recursive https://github.com/AyuGram/AyuGramDesktop.git tdesktop
           ./tdesktop/Telegram/build/prepare/linux.sh
-
+    - run: |
           cd ./tdesktop
-          
           docker run --rm -it \
             -u $(id -u) \
             -v "$PWD:/usr/src/tdesktop" \
