@@ -12,6 +12,11 @@ jobs:
           ./tdesktop/Telegram/build/prepare/linux.sh
 
           cd ./tdesktop
+          
+          sudo apt update
+          sudo apt install -y python3-poetry
+          sudo apt install -y docker-buildx
+          
           docker run --rm -it \
             -u $(id -u) \
             -v "$PWD:/usr/src/tdesktop" \
