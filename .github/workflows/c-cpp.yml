@@ -1,0 +1,28 @@
+name: b
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+          git clone --recursive https://github.com/AyuGram/AyuGramDesktop.git tdesktop
+          ./tdesktop/Telegram/build/prepare/linux.sh
+
+          cd ./tdesktop
+          docker run --rm -it \
+            -u $(id -u) \
+            -v "$PWD:/usr/src/tdesktop" \
+            -e CONFIG=Debug \
+            ghcr.io/telegramdesktop/tdesktop/centos_env:latest \
+            /usr/src/tdesktop/Telegram/build/docker/centos_env/build.sh \
+            -D TDESKTOP_API_ID=2040 \
+            -D TDESKTOP_API_HASH=b18441a1ff607e10a989891a5462e627
+    - uses: actions/upload-artifact@v4
+      with:
+          name: AyuGramDesktop-out
+          path: tdesktop/out/
+          if-no-files-found: error
+          retention-days: 7
