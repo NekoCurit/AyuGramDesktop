@@ -10,12 +10,13 @@ jobs:
     - run: |
           sudo apt update
           sudo apt install -y python3-poetry
+    - uses: docker/setup-buildx-action@v4
     - run: |
           git clone --recursive https://github.com/AyuGram/AyuGramDesktop.git tdesktop
           ./tdesktop/Telegram/build/prepare/linux.sh
     - run: |
           cd ./tdesktop
-          docker run --rm -it \
+          docker run --rm \
             -u $(id -u) \
             -v "$PWD:/usr/src/tdesktop" \
             -e CONFIG=Debug \
